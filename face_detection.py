@@ -6,8 +6,8 @@ cascade_path = pathlib.Path(cv2.__file__).parent.absolute() / 'data/haarcascade_
 
 clf = cv2.CascadeClassifier(str(cascade_path))
 
-camera = cv2.VideoCapture(0) # ashan ashaghal el camera (0 = default camera)
-# camera = cv2.VideoCapture("video.mp4") # lw ayez a3mlo 3la video
+camera = cv2.VideoCapture(0)  # capture from camera
+# camera = cv2.VideoCapture("video.mp4")  # capture from video
 
 while True:
     _, frame = camera.read()
@@ -15,7 +15,7 @@ while True:
     faces = clf.detectMultiScale(
         gray,
         scaleFactor=1.1,
-        minNeighbors=5,
+        minNeighbors=7,
         minSize=(30, 30),
         flags=cv2.CASCADE_SCALE_IMAGE
     )
@@ -23,8 +23,8 @@ while True:
     for (x, y, width, height) in faces:
         cv2.rectangle(frame, (x, y), (x+width, y+height), (0, 255, 0), 2)
 
-    cv2.imshow("faces", frame)
-    if cv2.waitKey(1) == ord('q'): # lw dost 3la Q
+    cv2.imshow("face detection", frame)
+    if cv2.waitKey(1) == ord('q'): 
         break
 
 camera.release()
